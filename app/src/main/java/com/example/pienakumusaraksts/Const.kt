@@ -1,5 +1,7 @@
 package com.example.pienakumusaraksts
 
+import android.os.FileObserver.CREATE
+
 const val DATABASE_NAME = "PienakumuSaraksts"
 const val DATABASE_VERSION = 1
 const val TABLE_PIENAKUMI = "PienakumuSaraksts"

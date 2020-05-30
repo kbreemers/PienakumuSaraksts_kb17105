@@ -4,11 +4,11 @@ import android.content.Context
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,13 +23,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        setTitle("Pienakumu saraksts")
         databaseHandler = DatabaseHandler(this)
         rv_main.layoutManager = LinearLayoutManager(this)
 
         fab_main.setOnClickListener {
             val dialog = AlertDialog.Builder(this)
-            val view = layoutInflater.inflate(R.layout.dialog_dashboard, null)
+            val view = layoutInflater.inflate(R.layout.dialog_main, null)
             val name = view.findViewById<EditText>(R.id.tv_pienakumi)
             dialog.setView(view)
             dialog.setPositiveButton("Add") { _: DialogInterface, _: Int ->
@@ -57,10 +57,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     class MainAdapter(val context: Context, val list: MutableList<PienakumuSaraksts>) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
-        class ViewHolder(v : View) : RecyclerView.ViewHolder(v) {
-            val name : TextView = v.findViewById(R.id.tv_name)
-        }
-
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             return ViewHolder(LayoutInflater.from(context).inflate(R.layout.rv_child_main, parent,false))
         }
@@ -70,7 +66,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            holder.name.text = list[position].name
+            holder.pienakums.text = list[position].name
+        }
+
+        class ViewHolder(v : View) : RecyclerView.ViewHolder(v) {
+            val pienakums : TextView = v.findViewById(R.id.tv_name)
         }
     }
 }

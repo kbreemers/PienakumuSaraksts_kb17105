@@ -5,17 +5,16 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.example.pienakumusaraksts.DTO.PienakumuSaraksts
-import java.security.AccessControlContext
 
 class DatabaseHandler(val context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
-    override fun onCreate(db: SQLiteDatabase?) {
-        val createTable: String = "CREATE TABLE PienakumuSaraksts (" +
+    override fun onCreate(db: SQLiteDatabase) {
+        val createTable = "CREATE TABLE $TABLE_PIENAKUMI (" +
                 "$COL_ID integer PRIMARY KEY AUTOINCREMENT," +
                 "$COL_CREATED_AT datetime DEFAULT CURRENT_TIMESTAMP," +
                 "$COL_NAME varchar," +
                 "$COL_IS_RESOLVED integer);"
 
-        db?.execSQL(createTable)
+        db.execSQL(createTable)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -29,8 +28,8 @@ class DatabaseHandler(val context: Context) : SQLiteOpenHelper(context, DATABASE
         return result != (-1).toLong()
     }
 
-    fun getPienakums() {
-        var result : MutableList<PienakumuSaraksts> = ArrayList()
+    fun getPienakums() : MutableList<PienakumuSaraksts>{
+        val result : MutableList<PienakumuSaraksts> = ArrayList()
         val db = readableDatabase
         val queryResult = db.rawQuery("SELECT * from $TABLE_PIENAKUMI", null)
         if (queryResult.moveToFirst()) {
@@ -46,5 +45,7 @@ class DatabaseHandler(val context: Context) : SQLiteOpenHelper(context, DATABASE
                 result.add(pienakumuSaraksts)
             } while (queryResult.moveToNext())
         }
+        queryResult.close()
+        return result
     }
 }
