@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +22,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setTitle("Pienakumu saraksts")
         databaseHandler = DatabaseHandler(this)
         rv_main.layoutManager = LinearLayoutManager(this)
 
@@ -34,9 +32,9 @@ class MainActivity : AppCompatActivity() {
             dialog.setView(view)
             dialog.setPositiveButton("Add") { _: DialogInterface, _: Int ->
                 if (name.text.isNotEmpty()) {
-                    val pienakums = PienakumuSaraksts()
-                    pienakums.name = name.text.toString()
-                    databaseHandler.addPienakums(pienakums)
+                    val responsibility = PienakumuSaraksts()
+                    responsibility.name = name.text.toString()
+                    databaseHandler.addResponsibility(responsibility)
                     refreshList()
                 }
             }
@@ -53,7 +51,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun refreshList() {
-        rv_main.adapter = MainAdapter(this, databaseHandler.getPienakums())
+        rv_main.adapter = MainAdapter(this, databaseHandler.getResponsibility())
     }
 
     class MainAdapter(val context: Context, val list: MutableList<PienakumuSaraksts>) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
@@ -66,11 +64,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            holder.pienakums.text = list[position].name
+            holder.responsibility.text = list[position].name
         }
 
         class ViewHolder(v : View) : RecyclerView.ViewHolder(v) {
-            val pienakums : TextView = v.findViewById(R.id.tv_name)
+            val responsibility : TextView = v.findViewById(R.id.tv_name)
         }
     }
 }

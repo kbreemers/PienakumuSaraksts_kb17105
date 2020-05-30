@@ -20,15 +20,15 @@ class DatabaseHandler(val context: Context) : SQLiteOpenHelper(context, DATABASE
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
     }
 
-    fun addPienakums(pienakums : PienakumuSaraksts): Boolean {
+    fun addResponsibility(responsibility : PienakumuSaraksts): Boolean {
         val db = writableDatabase
         val cv = ContentValues()
-        cv.put(COL_NAME, pienakums.name)
+        cv.put(COL_NAME, responsibility.name)
         val result:Long = db.insert(TABLE_PIENAKUMI,null, cv)
         return result != (-1).toLong()
     }
 
-    fun getPienakums() : MutableList<PienakumuSaraksts>{
+    fun getResponsibility() : MutableList<PienakumuSaraksts>{
         val result : MutableList<PienakumuSaraksts> = ArrayList()
         val db = readableDatabase
         val queryResult = db.rawQuery("SELECT * from $TABLE_PIENAKUMI", null)
