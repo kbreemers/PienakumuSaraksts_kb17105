@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PienakumuSaraksts</string>
+    <string name="app_name">Mans pienākumu saraksts</string>
 
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
