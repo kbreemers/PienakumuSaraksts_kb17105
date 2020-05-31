@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ImageView
+import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,12 +20,14 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     lateinit var databaseHandler: DatabaseHandler
+    var responsibilityId : Long = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         databaseHandler = DatabaseHandler(this)
         rv_main.layoutManager = LinearLayoutManager(this)
+        responsibilityId = intent.getLongExtra(COL_ID, -1)
 
         fab_main.setOnClickListener {
             val dialog = AlertDialog.Builder(this)
@@ -34,6 +38,8 @@ class MainActivity : AppCompatActivity() {
                 if (name.text.isNotEmpty()) {
                     val responsibility = PienakumuSaraksts()
                     responsibility.name = name.text.toString()
+                    responsibility.id - responsibilityId
+                    responsibility.isResolved = false
                     databaseHandler.addResponsibility(responsibility)
                     refreshList()
                 }
@@ -65,10 +71,35 @@ class MainActivity : AppCompatActivity() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             holder.responsibility.text = list[position].name
+
+            holder.menu.setOnClickListener {
+                val popup = PopupMenu(context,holder.menu)
+                popup.inflate(R.menu.main_child)
+                popup.setOnMenuItemClickListener {
+
+                    when(it.itemId) {
+                        R.id.menu_edit-> {
+
+                        }
+                        R.id.menu_delete-> {
+
+                        }
+                        R.id.menu_mark_as_resolved-> {
+
+                        }
+                        R.id.menu_reset-> {
+
+                        }
+                    }
+
+                    true
+                }
+            }
         }
 
         class ViewHolder(v : View) : RecyclerView.ViewHolder(v) {
             val responsibility : TextView = v.findViewById(R.id.tv_name)
+            val menu : ImageView = v.findViewById(R.id.iv_menu)
         }
     }
 }

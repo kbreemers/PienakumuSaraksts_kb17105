@@ -24,6 +24,12 @@ class DatabaseHandler(val context: Context) : SQLiteOpenHelper(context, DATABASE
         val db = writableDatabase
         val cv = ContentValues()
         cv.put(COL_NAME, responsibility.name)
+        cv.put(COL_IS_RESOLVED, responsibility.isResolved)
+//        if (responsibility.isResolved)
+//            cv.put(COL_IS_RESOLVED, true)
+//        else
+//            cv.put(COL_IS_RESOLVED, false)
+
         val result:Long = db.insert(TABLE_PIENAKUMI,null, cv)
         return result != (-1).toLong()
     }
@@ -38,10 +44,10 @@ class DatabaseHandler(val context: Context) : SQLiteOpenHelper(context, DATABASE
                 pienakumuSaraksts.id = queryResult.getLong(queryResult.getColumnIndex(COL_ID))
                 pienakumuSaraksts.name = queryResult.getString(queryResult.getColumnIndex(
                     COL_NAME))
-//                pienakumuSaraksts.createdAt = queryResult.getString(queryResult.getColumnIndex(
-//                    COL_CREATED_AT))
-//                pienakumuSaraksts.isResolved = queryResult.getLong(queryResult.getColumnIndex(
-//                    COL_IS_RESOLVED))
+                pienakumuSaraksts.createdAt = queryResult.getString(queryResult.getColumnIndex(
+                    COL_CREATED_AT))
+                pienakumuSaraksts.isResolved = queryResult.getInt(queryResult.getColumnIndex(
+                    COL_IS_RESOLVED)) == 1
                 result.add(pienakumuSaraksts)
             } while (queryResult.moveToNext())
         }

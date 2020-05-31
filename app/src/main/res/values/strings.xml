@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">PienakumuSaraksts</string>
+
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="mark_as_resolved">Mark as Resolved</string>
+    <string name="reset">Reset</string>
+
 </resources>
