@@ -51,6 +51,25 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun updateList(responsibility: PienakumuSaraksts) {
+        val dialog = AlertDialog.Builder(this)
+        val view = layoutInflater.inflate(R.layout.dialog_main, null)
+        val name = view.findViewById<EditText>(R.id.tv_pienakumi)
+        name.setText(responsibility.name)
+        dialog.setView(view)
+        dialog.setPositiveButton("Add") { _: DialogInterface, _: Int ->
+            if (name.text.isNotEmpty()) {
+                responsibility.name = name.text.toString()
+                databaseHandler.updateResponsibilty(responsibility)
+                refreshList()
+            }
+        }
+        dialog.setNegativeButton("Cancel") { _: DialogInterface, _: Int ->
+
+        }
+        dialog.show()
+    }
+
     override fun onResume() {
         refreshList()
         super.onResume()
@@ -60,9 +79,9 @@ class MainActivity : AppCompatActivity() {
         rv_main.adapter = MainAdapter(this, databaseHandler.getResponsibility())
     }
 
-    class MainAdapter(val context: Context, val list: MutableList<PienakumuSaraksts>) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
+    class MainAdapter(val activity: MainActivity, val list: MutableList<PienakumuSaraksts>) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            return ViewHolder(LayoutInflater.from(context).inflate(R.layout.rv_child_main, parent,false))
+            return ViewHolder(LayoutInflater.from(activity).inflate(R.layout.rv_child_main, parent,false))
         }
 
         override fun getItemCount(): Int {
@@ -73,27 +92,29 @@ class MainActivity : AppCompatActivity() {
             holder.responsibility.text = list[position].name
 
             holder.menu.setOnClickListener {
-                val popup = PopupMenu(context,holder.menu)
+                val popup = PopupMenu(activity,holder.menu)
                 popup.inflate(R.menu.main_child)
                 popup.setOnMenuItemClickListener {
 
                     when(it.itemId) {
                         R.id.menu_edit-> {
-
+                            activity.updateList(list[position])
                         }
                         R.id.menu_delete-> {
-
+                            activity.databaseHandler.deleteResponsibility(list[position].id)
+                            activity.refreshList()
                         }
                         R.id.menu_mark_as_resolved-> {
-
+                            activity.databaseHandler.updateAsResolved(list[position].id, true)
                         }
                         R.id.menu_reset-> {
-
+                            activity.databaseHandler.updateAsResolved(list[position].id, false)
                         }
                     }
 
                     true
                 }
+                popup.show()
             }
         }
 

@@ -23,4 +23,14 @@
         android:padding="8dp"
         />
 
+    <ImageView
+        android:id="@+id/iv_resolved"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_toLeftOf="@+id/iv_menu"
+        android:src="@drawable/resolved"
+        android:padding="8dp"
+        
+        />
+
 </RelativeLayout>

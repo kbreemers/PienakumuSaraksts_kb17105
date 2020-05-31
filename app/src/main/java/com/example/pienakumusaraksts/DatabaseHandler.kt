@@ -34,7 +34,38 @@ class DatabaseHandler(val context: Context) : SQLiteOpenHelper(context, DATABASE
         return result != (-1).toLong()
     }
 
-    fun getResponsibility() : MutableList<PienakumuSaraksts>{
+    fun deleteResponsibility(id: Long) {
+        val db = writableDatabase
+        db.delete(TABLE_PIENAKUMI, "$COL_ID=?", arrayOf(id.toString()))
+    }
+
+    fun updateResponsibilty(responsibility : PienakumuSaraksts) {
+        val db = writableDatabase
+        val cv = ContentValues()
+        cv.put(COL_NAME, responsibility.name)
+//        cv.put(COL_IS_RESOLVED, responsibility.isResolved)
+        db.update(TABLE_PIENAKUMI,cv, "$COL_ID=?", arrayOf(responsibility.id.toString()))
+    }
+
+    fun updateAsResolved(responsibilityId: Long, isResolved: Boolean) {
+        val db = readableDatabase
+        val queryResult = db.rawQuery("SELECT * from $TABLE_PIENAKUMI WHERE $COL_ID = $responsibilityId", null)
+        if (queryResult.moveToFirst()) {
+            do {
+                val pienakumuSaraksts = PienakumuSaraksts()
+                pienakumuSaraksts.id = queryResult.getLong(queryResult.getColumnIndex(COL_ID))
+                pienakumuSaraksts.name = queryResult.getString(queryResult.getColumnIndex(
+                    COL_NAME))
+                pienakumuSaraksts.createdAt = queryResult.getString(queryResult.getColumnIndex(
+                    COL_CREATED_AT))
+                pienakumuSaraksts.isResolved = isResolved
+                updateResponsibilty(pienakumuSaraksts)
+            } while (queryResult.moveToNext())
+        }
+        queryResult.close()
+    }
+
+    fun getResponsibility() : MutableList<PienakumuSaraksts> {
         val result : MutableList<PienakumuSaraksts> = ArrayList()
         val db = readableDatabase
         val queryResult = db.rawQuery("SELECT * from $TABLE_PIENAKUMI", null)
