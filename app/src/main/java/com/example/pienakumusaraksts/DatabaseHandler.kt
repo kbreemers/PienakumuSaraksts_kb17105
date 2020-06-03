@@ -25,6 +25,7 @@ class DatabaseHandler(val context: Context) : SQLiteOpenHelper(context, DATABASE
         val cv = ContentValues()
         cv.put(COL_NAME, responsibility.name)
         cv.put(COL_IS_RESOLVED, responsibility.isResolved)
+//        if (responsibility.isResolved == true)
 //        if (responsibility.isResolved)
 //            cv.put(COL_IS_RESOLVED, true)
 //        else

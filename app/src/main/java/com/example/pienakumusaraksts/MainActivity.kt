@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pienakumusaraksts.DTO.PienakumuSaraksts
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.rv_child_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         databaseHandler = DatabaseHandler(this)
         rv_main.layoutManager = LinearLayoutManager(this)
         responsibilityId = intent.getLongExtra(COL_ID, -1)
-
+        
         fab_main.setOnClickListener {
             val dialog = AlertDialog.Builder(this)
             val view = layoutInflater.inflate(R.layout.dialog_main, null)
