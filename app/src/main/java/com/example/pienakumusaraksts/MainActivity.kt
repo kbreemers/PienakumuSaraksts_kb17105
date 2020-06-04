@@ -107,9 +107,11 @@ class MainActivity : AppCompatActivity() {
                         }
                         R.id.menu_mark_as_resolved-> {
                             activity.databaseHandler.updateAsResolved(list[position].id, true)
+                            holder.resolved.visibility = View.VISIBLE
                         }
                         R.id.menu_reset-> {
                             activity.databaseHandler.updateAsResolved(list[position].id, false)
+                            holder.resolved.visibility = View.INVISIBLE
                         }
                     }
 
@@ -122,6 +124,7 @@ class MainActivity : AppCompatActivity() {
         class ViewHolder(v : View) : RecyclerView.ViewHolder(v) {
             val responsibility : TextView = v.findViewById(R.id.tv_name)
             val menu : ImageView = v.findViewById(R.id.iv_menu)
+            val resolved : ImageView = v.findViewById(R.id.iv_resolved)
         }
     }
 }
