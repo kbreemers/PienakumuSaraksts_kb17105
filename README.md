@@ -23,6 +23,8 @@ Lietotne izstrādāta valodā Kotlin
 Šī projekta datubāzē eksistē viena tabula, kura sevī ietver: pienākuma ID (kā integer), tā nosaukumu (kā varchar),
 izveidošanas laiku (kā datetime) un vai tas attiecīgais pienākums ir izdarīts (kā integer - "0" ir false un "1" ir true).
 
+Ekrāna ieraksts ar lietotnes darbību ir lejupielādējams šeit: https://failiem.lv/u/ttssegxj
+
 Darbības paskaidrojums pēc pievienotā video:
 Lietotājs var pievienot pienākumus, tos labot, dzēst, atzīmēt kā izdarītus un atzīmēt atpakaļ kā neizdarītus. 
 Kad pienākums ir atzīmēts kā izdarīts, tam būtu jāparāda ķeksīti blakus 'trīs punktu' jeb '...' izvēlnei. 
