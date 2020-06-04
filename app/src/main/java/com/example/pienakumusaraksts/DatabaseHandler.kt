@@ -25,11 +25,6 @@ class DatabaseHandler(val context: Context) : SQLiteOpenHelper(context, DATABASE
         val cv = ContentValues()
         cv.put(COL_NAME, responsibility.name)
         cv.put(COL_IS_RESOLVED, responsibility.isResolved)
-//        if (responsibility.isResolved == true)
-//        if (responsibility.isResolved)
-//            cv.put(COL_IS_RESOLVED, true)
-//        else
-//            cv.put(COL_IS_RESOLVED, false)
 
         val result:Long = db.insert(TABLE_PIENAKUMI,null, cv)
         return result != (-1).toLong()
@@ -44,7 +39,6 @@ class DatabaseHandler(val context: Context) : SQLiteOpenHelper(context, DATABASE
         val db = writableDatabase
         val cv = ContentValues()
         cv.put(COL_NAME, responsibility.name)
-//        cv.put(COL_IS_RESOLVED, responsibility.isResolved)
         db.update(TABLE_PIENAKUMI,cv, "$COL_ID=?", arrayOf(responsibility.id.toString()))
     }
 
